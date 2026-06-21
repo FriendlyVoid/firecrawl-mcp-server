@@ -32,9 +32,23 @@ declare module 'firecrawl-fastmcp' {
       version?: string;
       logger?: Logger;
       roots?: { enabled?: boolean };
-      authenticate?: (request: {
+      authenticate?: (request?: {
         headers: IncomingHttpHeaders;
+        /** Request target (path + query string) for HTTP transports. */
+        url?: string;
       }) => Promise<Session> | Session;
+      oauth?: {
+        enabled: boolean;
+        protectedResource?: {
+          authorizationServers: string[];
+          bearerMethodsSupported?: string[];
+          resource: string;
+          resourceName?: string;
+          scopesSupported?: string[];
+          [key: string]: unknown;
+        };
+        protectedResourceMetadataUrl?: string;
+      };
       health?: {
         enabled?: boolean;
         message?: string;
@@ -47,6 +61,11 @@ declare module 'firecrawl-fastmcp' {
       name: string;
       description?: string;
       parameters?: unknown;
+      /**
+       * Gate tool visibility per session. Returning false hides the tool from
+       * `tools/list` and rejects calls for that session.
+       */
+      canAccess?: (session?: Session) => boolean;
       /** MCP tool annotations (title, readOnlyHint, etc.) */
       annotations?: {
         /** A human-readable title for the tool. */

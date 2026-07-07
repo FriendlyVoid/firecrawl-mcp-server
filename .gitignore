@@ -10,9 +10,11 @@ logs
 npm-debug.log*
 
 # Environment
+*.env
 .env
 .env.local
 .env.*.local
+!.env.example
 claude_desktop_config.json
 
 # IDE

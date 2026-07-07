@@ -1,0 +1,20 @@
+# gitleaks per-repo allowlist
+#
+# Inherits from gitleaks defaults; only overrides what's needed.
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Allow placeholders and example/documentation values"
+paths = [
+  '''(?i).*\.env\.example$''',
+  '''.*README\.md''',
+]
+regexes = [
+  '''=\s*$''',
+  '''=\s*<.*>''',
+  # Documentation placeholders for the Firecrawl API key
+  '''(?i)YOUR[_-]API[_-]KEY''',
+  '''fc-YOUR[_-]API[_-]KEY''',
+]
